@@ -49,9 +49,8 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit @Named(DATABASE
     * @return An asynchronous execution.
     */
   def save(data: EntityType): DBIO[ID] = data.id match {
-    case Some(_: Long) => this.table.update(data).map(_ => data.id.get)
-    case Some(id)      => this.table.insertOrUpdate(data).map(_ => id)
-    case _             => this.table.returning(this.table.map(_.id)).into((_, id) => id) += data
+    case Some(id) => this.table.insertOrUpdate(data).map(_ => id)
+    case _        => this.table.returning(this.table.map(_.id)).into((_, id) => id) += data
   }
 
   /**

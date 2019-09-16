@@ -15,8 +15,8 @@ import scala.concurrent.ExecutionContext
   */
 @Singleton
 class UserRepository @Inject()(
-    protected val dbConfigProvider: DatabaseConfigProvider,
-)(implicit @Named(DATABASE_DISPATCHER) ec: ExecutionContext)
+    protected val dbConfigProvider: DatabaseConfigProvider
+  )(implicit @Named(DATABASE_DISPATCHER) ec: ExecutionContext)
     extends Repository[UserId, User] {
 
   import profile.api._
