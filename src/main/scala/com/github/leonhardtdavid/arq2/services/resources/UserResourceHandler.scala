@@ -70,7 +70,7 @@ class UserResourceHandler @Inject()(
   /**
     * Delete a [[com.github.leonhardtdavid.arq2.models.User]] by id
     *
-    * @param id rule's id to delete
+    * @param id User's id to delete
     * @return a [[scala.concurrent.Future]] with the result
     */
   def delete(id: UserId): Future[Boolean] = db.run {
@@ -79,7 +79,7 @@ class UserResourceHandler @Inject()(
   }
 
   /**
-    * Count rules quantity
+    * Count users quantity
     *
     * @return a [[scala.concurrent.Future]] with the result
     */

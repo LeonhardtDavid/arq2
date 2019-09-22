@@ -21,7 +21,7 @@ buildInfoOptions += BuildInfoOption.ToJson
 flywayUrl := "jdbc:postgresql://localhost/arq2?stringtype=unspecified"
 flywayUser := "arq2"
 flywayPassword := "arq2"
-flywayLocations += "migrations"
+flywayLocations ++= Seq("migrations/ups", "migrations/downs")
 flywayUrl in Test := "jdbc:h2:mem:arq2;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE"
 
 mappings in (Compile, packageDoc) := Seq()

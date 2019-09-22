@@ -8,8 +8,6 @@ import io.circe.syntax._
 import javax.inject.Inject
 import pdi.jwt.{JwtAlgorithm, JwtCirce, JwtClaim}
 
-import scala.util.Success
-
 /**
   * Json Web Tokens service for tokens generation and validation.
   *

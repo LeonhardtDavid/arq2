@@ -1,19 +1,22 @@
 package com.github.leonhardtdavid.arq2.services.repositories
 
 import com.github.leonhardtdavid.arq2.entities.{User, UserId}
-import javax.inject.Inject
+import com.github.leonhardtdavid.arq2.models.config.DATABASE_DISPATCHER
+import javax.inject.{Inject, Named}
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 
 import scala.concurrent.ExecutionContext
 
 /**
-  * Client access to database.
+  * User access to database.
   *
   * @param database A database access class.
   * @param ec       An implicit custom execution context.
   */
-class UserRepository @Inject()(val database: DatabaseConfig[JdbcProfile])(implicit ec: ExecutionContext)
+class UserRepository @Inject()(
+    val database: DatabaseConfig[JdbcProfile]
+  )(implicit @Named(DATABASE_DISPATCHER) ec: ExecutionContext)
     extends Repository[UserId, User] {
 
   import database.profile.api._

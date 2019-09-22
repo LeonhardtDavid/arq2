@@ -1,6 +1,9 @@
 package com.github.leonhardtdavid.arq2.services.repositories
 
-import com.github.leonhardtdavid.arq2.entities.{Entity, UserId}
+import java.sql.Timestamp
+import java.time.{OffsetDateTime, ZoneOffset}
+
+import com.github.leonhardtdavid.arq2.entities.{Entity, EventId, RequirementId, UserId}
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 
@@ -39,7 +42,7 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit ec: ExecutionCo
     * @return An asynchronous execution.
     */
   def save(data: EntityType): DBIO[ID] = data.id match {
-    case Some(id) => this.table.insertOrUpdate(data).map(_ => id)
+    case Some(id) => this.table.update(data).map(_ => id)
     case _        => this.table.returning(this.table.map(_.id)).into((_, id) => id) += data
   }
 
@@ -74,10 +77,28 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit ec: ExecutionCo
   def count: DBIO[Int] = this.table.length.result
 
   // scalastyle:off scaladoc
+  implicit protected def offsetDateTimeColumn: BaseColumnType[OffsetDateTime] =
+    MappedColumnType.base[OffsetDateTime, Timestamp](
+      dateTime => Timestamp.from(dateTime.withOffsetSameInstant(ZoneOffset.UTC).toInstant),
+      date => OffsetDateTime.ofInstant(date.toInstant, ZoneOffset.UTC)
+    )
+
   implicit protected def userIdColumn: BaseColumnType[UserId] =
     MappedColumnType.base[UserId, Long](
       _.underlying,
       UserId.apply
+    )
+
+  implicit protected def eventIdColumn: BaseColumnType[EventId] =
+    MappedColumnType.base[EventId, Long](
+      _.underlying,
+      EventId.apply
+    )
+
+  implicit protected def requirementIdColumn: BaseColumnType[RequirementId] =
+    MappedColumnType.base[RequirementId, Long](
+      _.underlying,
+      RequirementId.apply
     )
   // scalastyle:on scaladoc
 

@@ -3,7 +3,7 @@ package com.github.leonhardtdavid.arq2.models
 import com.github.leonhardtdavid.arq2.entities.UserId
 
 /**
-  * A user that belongs to a client and has access to this app.
+  * An user that has access to this app.
   *
   * @param id        An optional id.
   * @param username  The user nick name.
