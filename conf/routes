@@ -1,9 +1,0 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# https://www.playframework.com/documentation/latest/ScalaRouting
-# ~~~~
-
-# Health check
-GET        /healthcheck                                                     controllers.HealthCheckController.check
-
-->         /api                                                             api.Routes

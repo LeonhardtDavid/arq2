@@ -76,13 +76,13 @@
     <!--</check>-->
     <check level="error" class="org.scalastyle.scalariform.MethodNamesChecker" enabled="true">
         <parameters>
-            <parameter name="regex"><![CDATA[^[a-z<+][A-Za-z0-9+=]*$]]></parameter>
+            <parameter name="regex"><![CDATA[^[a-z<+\&][A-Za-z0-9&+=]*$]]></parameter>
         </parameters>
     </check>
     <check level="warning" class="org.scalastyle.scalariform.MultipleStringLiteralsChecker" enabled="true">
         <parameters>
             <parameter name="allowed">1</parameter>
-            <parameter name="ignoreRegex">^(""|"|" "|","|"."|"[0-9]"|"\\n"|"localhost"|"""|" """)$</parameter>
+            <parameter name="ignoreRegex">^(""|"|" "|","|"."|"[0-9]"|"\n"|"localhost"|"""|" """)$</parameter>
         </parameters>
     </check>
     <check level="warning" class="org.scalastyle.scalariform.NoCloneChecker" enabled="true"/>
