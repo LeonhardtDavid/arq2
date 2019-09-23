@@ -6,6 +6,7 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import com.github.leonhardtdavid.arq2.routes.Router._
+import com.github.leonhardtdavid.arq2.routes.events.EventsRouter
 import com.github.leonhardtdavid.arq2.routes.healthcheck.HealthcheckRouter
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.users.UsersRouter
@@ -18,9 +19,14 @@ import javax.inject.{Inject, Singleton}
   * @param logger            Logger instance.
   * @param healthCheckRouter A [[com.github.leonhardtdavid.arq2.routes.healthcheck.HealthcheckRouter]] instance.
   * @param usersRouter       A [[com.github.leonhardtdavid.arq2.routes.users.UsersRouter]] instance.
+  * @param eventsRouter      A [[com.github.leonhardtdavid.arq2.routes.events.EventsRouter]] instance.
   */
 @Singleton
-class RouterService @Inject()(logger: LoggingAdapter, healthCheckRouter: HealthcheckRouter, usersRouter: UsersRouter)
+class RouterService @Inject()(
+    logger: LoggingAdapter,
+    healthCheckRouter: HealthcheckRouter,
+    usersRouter: UsersRouter,
+    eventsRouter: EventsRouter)
     extends CirceImplicits {
 
   private def getFailureJson(message: String) =
@@ -75,7 +81,8 @@ class RouterService @Inject()(logger: LoggingAdapter, healthCheckRouter: Healthc
   val routes: Route = handleExceptions(exceptionHandler) {
     healthCheckRouter.routes ~
       pathPrefix("api") {
-        usersRouter.routes
+        usersRouter.routes ~
+          eventsRouter.routes
       }
   }
 

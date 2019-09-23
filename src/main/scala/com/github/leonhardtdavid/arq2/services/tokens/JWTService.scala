@@ -46,6 +46,6 @@ class JWTService @Inject()(config: JWTConfiguration) {
       .decode(token, this.config.key, Seq(this.algorithm))
       .toOption
       .flatMap(claim => io.circe.parser.parse(claim.content).getOrElse(Json.obj()) \\ payloadKey headOption)
-      .map(_.noSpaces)
+      .flatMap(_.asString)
 
 }

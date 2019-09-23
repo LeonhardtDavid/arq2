@@ -18,6 +18,7 @@ CREATE TABLE event
     name        VARCHAR(50)              NOT NULL,
     image       VARCHAR(500)             NOT NULL,
     description TEXT,
+    capacity    INTEGER                  NOT NULL,
     date        TIMESTAMP WITH TIME ZONE NOT NULL,
     owner       INTEGER                  NOT NULL,
     tag         VARCHAR(50)              NOT NULL,
@@ -32,9 +33,9 @@ CREATE TABLE event
 CREATE TABLE requirement
 (
     id          SERIAL,
-    event       INTEGER      NOT NULL,
+    event_id    INTEGER      NOT NULL,
     description VARCHAR(100) NOT NULL,
     quantity    SMALLINT     NOT NULL,
-    FOREIGN KEY (event) REFERENCES event (id),
+    FOREIGN KEY (event_id) REFERENCES event (id),
     PRIMARY KEY (id)
 );

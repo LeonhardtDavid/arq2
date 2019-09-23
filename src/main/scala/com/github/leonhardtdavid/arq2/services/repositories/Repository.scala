@@ -70,7 +70,7 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit ec: ExecutionCo
   def delete(id: ID): DBIO[Boolean] = this.table.filter(_.id === id).delete.map(_ != 0)
 
   /**
-    * Count row quantity
+    * Count row quantity.
     *
     * @return count result
     */

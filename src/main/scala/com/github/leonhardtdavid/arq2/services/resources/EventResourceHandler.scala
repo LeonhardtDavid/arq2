@@ -61,6 +61,8 @@ class EventResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result.
     */
   def save(data: Event): Future[Event] = db.run {
+    logger.info("Saving Event")
+
     val dbEvent = this.model2db(data)
 
     val query =

@@ -15,8 +15,10 @@
     <appender-ref ref="STDOUT" />
   </appender>
 
-  <logger name="application" level="DEBUG"/>
-  <logger name="application(akka://default)" level="DEBUG"/>
+<!--  <logger name="application" level="DEBUG"/>-->
+
+  <logger name="slick" level="INFO" />
+  <logger name="slick.jdbc" level="DEBUG" />
 
   <root level="DEBUG">
     <appender-ref ref="ASYNCSTDOUT"/>

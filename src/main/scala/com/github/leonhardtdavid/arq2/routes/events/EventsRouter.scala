@@ -8,6 +8,7 @@ import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
 import com.github.leonhardtdavid.arq2.services.resources.{EventResourceHandler, UserResourceHandler}
 import com.github.leonhardtdavid.arq2.services.tokens.JWTService
+import io.circe.Json
 import io.circe.syntax._
 import javax.inject.Inject
 
@@ -36,7 +37,17 @@ class EventsRouter @Inject()(
         pathEnd {
           get {
             complete {
-              this.handler.list
+              val futureList  = this.handler.list
+              val futureCount = this.handler.count
+
+              for {
+                list  <- futureList
+                count <- futureCount
+              } yield
+                Json.obj(
+                  "items"    -> list.asJson,
+                  "quantity" -> count.asJson
+                )
             }
           } ~
             ((post | put) & entity(as[Event])) { req =>

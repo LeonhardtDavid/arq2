@@ -35,7 +35,7 @@ class EventRepository @Inject()(
     def image       = column[String]("image")
     def description = column[String]("description")
     def capacity    = column[Int]("capacity")
-    def date        = column[OffsetDateTime]("date")
+    def date        = column[OffsetDateTime]("date")(offsetDateTimeColumn)
     def owner       = column[UserId]("owner")
     def tagg        = column[String]("tag") // method with double g to avoid conflicts with slick tag parameter
     def public      = column[Boolean]("public")
