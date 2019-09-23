@@ -1,6 +1,7 @@
 package com.github.leonhardtdavid.arq2.routes.json
 
 import com.github.leonhardtdavid.arq2.entities.{EventId, RequirementId, UserId}
+import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport
 import io.circe.generic.extras.semiauto._
 import io.circe.generic.extras.{AutoDerivation, Configuration}
 import io.circe.{Decoder, Encoder}
@@ -8,7 +9,7 @@ import io.circe.{Decoder, Encoder}
 /**
   * Circe implicits.
   */
-trait CirceImplicits extends AutoDerivation {
+trait CirceImplicits extends AutoDerivation with ErrorAccumulatingCirceSupport {
 
   implicit val customConfig: Configuration =
     Configuration.default.withSnakeCaseMemberNames.withSnakeCaseConstructorNames

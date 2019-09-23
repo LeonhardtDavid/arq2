@@ -61,6 +61,17 @@ trait Router {
       )
     )
 
+  /**
+    * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 204.
+    *
+    * @return An instance of [[akka.http.scaladsl.model.HttpResponse]].
+    */
+  protected def noContent: HttpResponse =
+    HttpResponse(
+      status = StatusCodes.NoContent,
+      entity = HttpEntity.Empty
+    )
+
 }
 
 /**

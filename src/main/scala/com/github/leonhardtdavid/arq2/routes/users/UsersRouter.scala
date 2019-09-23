@@ -7,7 +7,6 @@ import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
 import com.github.leonhardtdavid.arq2.services.resources.UserResourceHandler
 import com.github.leonhardtdavid.arq2.services.tokens.JWTService
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Json
 import io.circe.syntax._
 import javax.inject.Inject
@@ -24,7 +23,6 @@ import scala.concurrent.ExecutionContext
 class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(implicit ec: ExecutionContext)
     extends Router
     with AuthenticationRouter
-    with FailFastCirceSupport
     with CirceImplicits {
 
   override val routes: Route =

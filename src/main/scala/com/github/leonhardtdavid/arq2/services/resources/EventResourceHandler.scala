@@ -57,8 +57,8 @@ class EventResourceHandler @Inject()(
   /**
     * Save a [[com.github.leonhardtdavid.arq2.models.Event]]
     *
-    * @param data the Event to save or update
-    * @return a [[scala.concurrent.Future]] with the result
+    * @param data The Event to save or update.
+    * @return a [[scala.concurrent.Future]] with the result.
     */
   def save(data: Event): Future[Event] = db.run {
     val dbEvent = this.model2db(data)
@@ -97,7 +97,7 @@ class EventResourceHandler @Inject()(
     * @param id Event's id to find
     * @return a [[scala.concurrent.Future]] with the result
     */
-  def get(id: EventId): Future[Option[Event]] = db.run {
+  def findById(id: EventId): Future[Option[Event]] = db.run {
     logger.debug(s"Getting Event $id")
 
     for {

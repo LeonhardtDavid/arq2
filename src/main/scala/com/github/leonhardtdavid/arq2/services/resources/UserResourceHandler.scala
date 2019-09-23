@@ -3,8 +3,8 @@ package com.github.leonhardtdavid.arq2.services.resources
 import akka.event.LoggingAdapter
 import com.github.leonhardtdavid.arq2.entities
 import com.github.leonhardtdavid.arq2.entities.UserId
-import com.github.leonhardtdavid.arq2.models.{User, UserToken}
 import com.github.leonhardtdavid.arq2.models.config._
+import com.github.leonhardtdavid.arq2.models.{User, UserToken}
 import com.github.leonhardtdavid.arq2.services.repositories.UserRepository
 import javax.inject.{Inject, Named}
 import org.mindrot.jbcrypt.BCrypt
@@ -62,9 +62,20 @@ class UserResourceHandler @Inject()(
     * @param id User's id to find
     * @return a [[scala.concurrent.Future]] with the result
     */
-  def get(id: UserId): Future[Option[User]] = db.run {
+  def findById(id: UserId): Future[Option[User]] = db.run {
     logger.debug(s"Getting User $id")
     this.repository.findById(id) map (_ map db2model)
+  }
+
+  /**
+    * Find a [[com.github.leonhardtdavid.arq2.models.User]] by nick name.
+    *
+    * @param username The user nick name.
+    * @return a [[scala.concurrent.Future]] with the result
+    */
+  def findByUsername(username: String): Future[Option[User]] = db.run {
+    logger.debug(s"Getting User by username $username")
+    this.repository.findByUsername(username) map (_ map db2model)
   }
 
   /**
@@ -94,10 +105,9 @@ class UserResourceHandler @Inject()(
     * @param user The user nick name and password.
     * @return True if password is valid, false otherwise.
     */
-  def validatePassword(user: UserToken): Future[Boolean] = db.run {
-    this.repository.findByUsername(user.username) map { maybeDBUser =>
+  def validatePassword(user: UserToken): Future[Boolean] =
+    this.findByUsername(user.username) map { maybeDBUser =>
       maybeDBUser.fold(false)(dbUser => BCrypt.checkpw(user.password, dbUser.password))
     }
-  }
 
 }
