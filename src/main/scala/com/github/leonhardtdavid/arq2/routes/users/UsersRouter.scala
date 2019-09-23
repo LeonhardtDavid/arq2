@@ -3,8 +3,8 @@ package com.github.leonhardtdavid.arq2.routes.users
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.github.leonhardtdavid.arq2.models.{User, UserToken}
-import com.github.leonhardtdavid.arq2.routes.Router
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
+import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
 import com.github.leonhardtdavid.arq2.services.resources.UserResourceHandler
 import com.github.leonhardtdavid.arq2.services.tokens.JWTService
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
@@ -21,19 +21,22 @@ import scala.concurrent.ExecutionContext
   * @param jwt     JWT token creator and validator.
   * @param ec      An implicit [[scala.concurrent.ExecutionContext]] instance.
   */
-class UsersRouter @Inject()(handler: UserResourceHandler, jwt: JWTService)(implicit ec: ExecutionContext)
+class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(implicit ec: ExecutionContext)
     extends Router
+    with AuthenticationRouter
     with FailFastCirceSupport
     with CirceImplicits {
 
   override val routes: Route =
     pathPrefix("users") {
       pathEnd {
-        (post & entity(as[User])) { req =>
-          extractRequestContext { context =>
-            complete {
-              this.handler.save(req.copy(id = None)) map { user =>
-                this.created(s"${context.request.uri.toString()}/${user.id.get.underlying}")
+        authenticated { _ =>
+          (post & entity(as[User])) { req =>
+            extractRequestContext { context =>
+              complete {
+                this.handler.save(req.copy(id = None)) map { user =>
+                  this.created(s"${context.request.uri.toString()}/${user.id.get.underlying}")
+                }
               }
             }
           }

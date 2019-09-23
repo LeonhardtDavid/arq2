@@ -138,8 +138,6 @@ scalacOptions += "-P:silencer:pathFilters=target/.*"
 // Make sure you only exclude warnings for the project directories, i.e. make builds reproducible
 scalacOptions += s"-P:silencer:sourceRoots=${baseDirectory.value.getCanonicalPath}"
 
-EclipseKeys.withSource := true
-
 compileOrder := CompileOrder.Mixed
 javacOptions ++= Seq("-source", "1.8")
 
