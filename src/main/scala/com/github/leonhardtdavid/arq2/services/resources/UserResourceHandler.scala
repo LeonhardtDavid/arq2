@@ -63,7 +63,7 @@ class UserResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result
     */
   def findById(id: UserId): Future[Option[User]] = db.run {
-    logger.debug(s"Getting User $id")
+    logger.debug("Getting User {}", id)
     this.repository.findById(id) map (_ map db2model)
   }
 
@@ -74,7 +74,7 @@ class UserResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result
     */
   def findByUsername(username: String): Future[Option[User]] = db.run {
-    logger.debug(s"Getting User by username $username")
+    logger.debug("Getting User by username {}", username)
     this.repository.findByUsername(username) map (_ map db2model)
   }
 
@@ -85,7 +85,7 @@ class UserResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result
     */
   def delete(id: UserId): Future[Boolean] = db.run {
-    logger.debug(s"Deleting User $id")
+    logger.debug("Deleting User {}", id)
     this.repository.delete(id)
   }
 

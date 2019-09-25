@@ -35,19 +35,23 @@ class EventsRouter @Inject()(
     authenticated { username =>
       pathPrefix("events") {
         pathEnd {
-          get {
-            complete {
-              val futureList  = this.handler.list
-              val futureCount = this.handler.count
+          (get & parameters(('from.as[Long] ? 0L, 'quantity.as[Int] ? 10))) { (from: Long, quantity: Int) =>
+            if (quantity > 1000) {
+              complete(this.badRequest("maximum quantity is 1000"))
+            } else {
+              complete {
+                val futureList  = this.handler.list(from, quantity)
+                val futureCount = this.handler.count
 
-              for {
-                list  <- futureList
-                count <- futureCount
-              } yield
-                Json.obj(
-                  "items"    -> list.asJson,
-                  "quantity" -> count.asJson
-                )
+                for {
+                  list  <- futureList
+                  count <- futureCount
+                } yield
+                  Json.obj(
+                    "items"    -> list.asJson,
+                    "quantity" -> count.asJson
+                  )
+              }
             }
           } ~
             ((post | put) & entity(as[Event])) { req =>

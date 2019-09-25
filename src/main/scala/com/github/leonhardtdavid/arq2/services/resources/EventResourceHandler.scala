@@ -86,11 +86,13 @@ class EventResourceHandler @Inject()(
   /**
     * List [[com.github.leonhardtdavid.arq2.models.Event]]
     *
+    * @param from     From row.
+    * @param quantity Result rows quantity.
     * @return a [[scala.concurrent.Future]] with the result
     */
-  def list: Future[List[Event]] = db.run {
-    logger.debug("Listing Event")
-    this.repository.list map (_ map db2model(Nil) toList)
+  def list(from: Long, quantity: Int): Future[List[Event]] = db.run {
+    logger.debug("Listing Event from {}, quantity {}", from, quantity)
+    this.repository.list(from, quantity) map (_ map db2model(Nil) toList)
   }
 
   /**
@@ -100,7 +102,7 @@ class EventResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result
     */
   def findById(id: EventId): Future[Option[Event]] = db.run {
-    logger.debug(s"Getting Event $id")
+    logger.debug("Getting Event {}", id)
 
     for {
       requirements <- this.requirementsRepository.findByEventId(id)
@@ -115,7 +117,7 @@ class EventResourceHandler @Inject()(
     * @return a [[scala.concurrent.Future]] with the result
     */
   def delete(id: EventId): Future[Boolean] = db.run {
-    logger.debug(s"Deleting Event $id")
+    logger.debug("Deleting Event {}", id)
 
     val query =
       for {

@@ -12,6 +12,8 @@ import io.circe.syntax._
   */
 trait Router {
 
+  private val errorKey = "error"
+
   /**
     * Defines the handled routes.
     * @return A [[akka.http.scaladsl.server.Route Route]]
@@ -47,6 +49,17 @@ trait Router {
     )
 
   /**
+    * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 204.
+    *
+    * @return An instance of [[akka.http.scaladsl.model.HttpResponse]].
+    */
+  protected def noContent: HttpResponse =
+    HttpResponse(
+      status = StatusCodes.NoContent,
+      entity = HttpEntity.Empty
+    )
+
+  /**
     * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 404.
     *
     * @param message The error message.
@@ -57,19 +70,23 @@ trait Router {
       status = StatusCodes.NotFound,
       entity = HttpEntity(
         ContentTypes.`application/json`,
-        data = ByteString(Json.obj("error" -> message.asJson).noSpaces)
+        data = ByteString(Json.obj(errorKey -> message.asJson).noSpaces)
       )
     )
 
   /**
-    * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 204.
+    * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 400.
     *
+    * @param message The error message.
     * @return An instance of [[akka.http.scaladsl.model.HttpResponse]].
     */
-  protected def noContent: HttpResponse =
+  protected def badRequest(message: String): HttpResponse =
     HttpResponse(
-      status = StatusCodes.NoContent,
-      entity = HttpEntity.Empty
+      status = StatusCodes.BadRequest,
+      entity = HttpEntity(
+        ContentTypes.`application/json`,
+        data = ByteString(Json.obj(errorKey -> message.asJson).noSpaces)
+      )
     )
 
 }

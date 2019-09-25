@@ -28,6 +28,15 @@ class EventRepository @Inject()(
   override protected type EntityTableType = Events
   val table: TableQuery[EntityTableType] = TableQuery[Events]
 
+  /**
+    * List the entities from the database with a limit.
+    *
+    * @param from     From row.
+    * @param quantity Result rows quantity.
+    * @return An asynchronous execution.
+    */
+  def list(from: Long, quantity: Int): DBIO[Seq[Event]] = this.table.drop(from).take(quantity).result
+
   // scalastyle:off
   class Events(tag: Tag) extends EntityTable(tag, "event") {
 
