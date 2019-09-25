@@ -56,7 +56,7 @@ class EventsRouter @Inject()(
                   for {
                     Some(user) <- this.userHandler.findByUsername(username)
                     event      <- this.handler.save(req.copy(id = None, owner = user.id.get))
-                  } yield this.created(s"${context.request.uri.toString()}/${event.id.get.underlying}")
+                  } yield this.created(s"${context.request.uri.toRelative.toString()}/${event.id.get.underlying}")
                 }
               }
             }

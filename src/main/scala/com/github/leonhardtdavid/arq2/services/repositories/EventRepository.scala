@@ -37,7 +37,7 @@ class EventRepository @Inject()(
     def capacity    = column[Int]("capacity")
     def date        = column[OffsetDateTime]("date")(offsetDateTimeColumn)
     def owner       = column[UserId]("owner")
-    def tagg        = column[String]("tag") // method with double g to avoid conflicts with slick tag parameter
+    def tagg        = column[String]("tag") // method with double g to avoid conflicts with slick tag class parameter
     def public      = column[Boolean]("public")
 
     def street  = column[String]("street")

@@ -33,7 +33,7 @@ class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(i
             extractRequestContext { context =>
               complete {
                 this.handler.save(req.copy(id = None)) map { user =>
-                  this.created(s"${context.request.uri.toString()}/${user.id.get.underlying}")
+                  this.created(s"${context.request.uri.toRelative.toString()}/${user.id.get.underlying}")
                 }
               }
             }

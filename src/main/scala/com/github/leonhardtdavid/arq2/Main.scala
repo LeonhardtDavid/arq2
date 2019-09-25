@@ -22,7 +22,7 @@ object Main extends App {
   implicit private val executor: ExecutionContext = system.dispatcher
   implicit private val materializer: Materializer = ActorMaterializer()
 
-  private val logger = Logging(system, "application")
+  private val logger = Logging(system.eventStream, "application")
 
   private val injector = Guice.createInjector(new Module(logger, system))
 

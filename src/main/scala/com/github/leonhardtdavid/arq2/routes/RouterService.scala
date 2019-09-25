@@ -1,10 +1,14 @@
 package com.github.leonhardtdavid.arq2.routes
 
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+
 import akka.event.LoggingAdapter
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
+import akka.http.scaladsl.server.directives.BasicDirectives.{extractRequestContext, mapRouteResult}
 import com.github.leonhardtdavid.arq2.routes.Router._
 import com.github.leonhardtdavid.arq2.routes.events.EventsRouter
 import com.github.leonhardtdavid.arq2.routes.healthcheck.HealthcheckRouter
@@ -78,12 +82,40 @@ class RouterService @Inject()(
       }
       .result()
 
-  val routes: Route = handleExceptions(exceptionHandler) {
-    healthCheckRouter.routes ~
-      pathPrefix("api") {
-        usersRouter.routes ~
-          eventsRouter.routes
+  private def logRequestResultWithTimeSpent = extractRequestContext.flatMap { ctx =>
+    val start = LocalDateTime.now()
+    val path  = ctx.request.uri.toRelative.toString()
+
+    def logTimeSpent(): Unit = logger.info(
+      "Time spent for path {} was {} ms",
+      path,
+      start.until(LocalDateTime.now(), ChronoUnit.MILLIS)
+    )
+
+    if (!path.contains("token")) {
+      logger.info("Request: {}", ctx.request.toString())
+      mapRouteResult { result =>
+        logger.info("Response: {}", ctx.request.toString())
+        logTimeSpent()
+        result
       }
+    } else {
+      mapRouteResult { result =>
+        logTimeSpent()
+        result
+      }
+    }
   }
+
+  val routes: Route =
+    logRequestResultWithTimeSpent {
+      handleExceptions(exceptionHandler) {
+        healthCheckRouter.routes ~
+          pathPrefix("api") {
+            usersRouter.routes ~
+              eventsRouter.routes
+          }
+      }
+    }
 
 }
