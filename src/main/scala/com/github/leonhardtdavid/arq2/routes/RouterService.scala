@@ -1,8 +1,5 @@
 package com.github.leonhardtdavid.arq2.routes
 
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
-
 import akka.event.LoggingAdapter
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
@@ -83,13 +80,13 @@ class RouterService @Inject()(
       .result()
 
   private def logRequestResultWithTimeSpent = extractRequestContext.flatMap { ctx =>
-    val start = LocalDateTime.now()
+    val start = System.currentTimeMillis()
     val path  = ctx.request.uri.toRelative.toString()
 
     def logTimeSpent(): Unit = logger.info(
       "Time spent for path {} was {} ms",
       path,
-      start.until(LocalDateTime.now(), ChronoUnit.MILLIS)
+      System.currentTimeMillis() - start
     )
 
     if (!path.contains("token")) {

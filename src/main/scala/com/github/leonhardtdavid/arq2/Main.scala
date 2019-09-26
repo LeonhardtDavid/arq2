@@ -22,8 +22,6 @@ object Main extends App {
   implicit private val executor: ExecutionContext = system.dispatcher
   implicit private val materializer: Materializer = ActorMaterializer()
 
-  sys.addShutdownHook(system.terminate())
-
   private val logger = Logging(system.eventStream, "application")
 
   private val injector = Guice.createInjector(new Module(logger, system))
