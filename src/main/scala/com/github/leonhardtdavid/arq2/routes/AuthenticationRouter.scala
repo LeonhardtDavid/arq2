@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.AuthenticationFailedRejection.CredentialsReject
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.directives.Credentials
 import akka.http.scaladsl.server.{AuthenticationFailedRejection, Directive}
-import com.github.leonhardtdavid.arq2.services.tokens.JWTService
+import com.github.leonhardtdavid.arq2.services.JWTService
 
 /**
   *

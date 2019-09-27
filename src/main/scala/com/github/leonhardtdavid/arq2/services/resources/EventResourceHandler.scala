@@ -6,7 +6,7 @@ import com.github.leonhardtdavid.arq2.entities.EventId
 import com.github.leonhardtdavid.arq2.models.config._
 import com.github.leonhardtdavid.arq2.models.{Event, Requirement}
 import com.github.leonhardtdavid.arq2.services.repositories.{EventRepository, RequirementRepository}
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import slick.basic.DatabaseConfig
 import slick.dbio.DBIOAction
 import slick.jdbc.JdbcProfile
@@ -23,6 +23,7 @@ import scala.concurrent.{ExecutionContext, Future}
   *                               instance.
   * @param ec                     A custom execution context.
   */
+@Singleton
 class EventResourceHandler @Inject()(
     logger: LoggingAdapter,
     database: DatabaseConfig[JdbcProfile],

@@ -33,7 +33,8 @@ libraryDependencies ++= {
   val slickVersion    = "3.3.1"
 
   Seq(
-    "com.google.inject" % "guice" % "4.2.2",
+    "com.google.inject" % "guice"   % "4.2.2",
+    "org.ehcache"       % "ehcache" % "3.7.1",
     // Logs
     "ch.qos.logback"    % "logback-classic" % "1.2.3",
     "com.typesafe.akka" %% "akka-slf4j"     % akkaVersion,
@@ -51,12 +52,11 @@ libraryDependencies ++= {
     "org.mindrot"   % "jbcrypt"    % "0.4",
     "com.pauldijou" %% "jwt-circe" % "4.0.0",
     // Akka
-    "com.typesafe.akka" %% "akka-actor"        % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream"       % akkaVersion,
-    "com.typesafe.akka" %% "akka-testkit"      % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream-kafka" % "1.0.5",
-    "com.typesafe.akka" %% "akka-http-core"    % akkaHttpVersion,
-    "com.typesafe.akka" %% "akka-http"         % akkaHttpVersion,
+    "com.typesafe.akka" %% "akka-actor"     % akkaVersion,
+    "com.typesafe.akka" %% "akka-stream"    % akkaVersion,
+    "com.typesafe.akka" %% "akka-testkit"   % akkaVersion,
+    "com.typesafe.akka" %% "akka-http-core" % akkaHttpVersion,
+    "com.typesafe.akka" %% "akka-http"      % akkaHttpVersion,
     // Database
     "com.typesafe.slick" %% "slick"          % slickVersion,
     "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,

@@ -6,7 +6,7 @@ import com.github.leonhardtdavid.arq2.entities.UserId
 import com.github.leonhardtdavid.arq2.models.config._
 import com.github.leonhardtdavid.arq2.models.{User, UserToken}
 import com.github.leonhardtdavid.arq2.services.repositories.UserRepository
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import org.mindrot.jbcrypt.BCrypt
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
@@ -21,6 +21,7 @@ import scala.concurrent.{ExecutionContext, Future}
   * @param repository A [[com.github.leonhardtdavid.arq2.services.repositories.UserRepository]] instance.
   * @param ec         A custom execution context.
   */
+@Singleton
 class UserResourceHandler @Inject()(
     logger: LoggingAdapter,
     database: DatabaseConfig[JdbcProfile],

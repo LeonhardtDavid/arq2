@@ -5,8 +5,8 @@ import akka.http.scaladsl.server.Route
 import com.github.leonhardtdavid.arq2.models.{User, UserToken}
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
+import com.github.leonhardtdavid.arq2.services.JWTService
 import com.github.leonhardtdavid.arq2.services.resources.UserResourceHandler
-import com.github.leonhardtdavid.arq2.services.tokens.JWTService
 import io.circe.Json
 import io.circe.syntax._
 import javax.inject.Inject

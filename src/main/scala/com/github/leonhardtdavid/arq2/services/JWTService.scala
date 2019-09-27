@@ -1,4 +1,4 @@
-package com.github.leonhardtdavid.arq2.services.tokens
+package com.github.leonhardtdavid.arq2.services
 
 import java.time.Instant
 

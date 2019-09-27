@@ -47,6 +47,27 @@ class Module(logger: LoggingAdapter, system: ActorSystem) extends AbstractModule
   )
 
   /**
+    * Bind a [[com.github.leonhardtdavid.arq2.models.config.CacheConfiguration]] instance for dependency injection.
+    *
+    * @return A [[com.github.leonhardtdavid.arq2.models.config.CacheConfiguration]] instance.
+    */
+  @Provides @Singleton
+  def cacheConfiguration: CacheConfiguration = new CacheConfiguration(
+    size = this.config.getLong(CACHE_SIZE),
+    ttl = this.config.getDuration(CACHE_TTL)
+  )
+
+  /**
+    * Bind a [[com.github.leonhardtdavid.arq2.models.config.WeatherConfiguration]] instance for dependency injection.
+    *
+    * @return A [[com.github.leonhardtdavid.arq2.models.config.WeatherConfiguration]] instance.
+    */
+  @Provides @Singleton
+  def weatherConfiguration: WeatherConfiguration = new WeatherConfiguration(
+    url = this.config.getString(WEATHER_URL)
+  )
+
+  /**
     * Bind a [[slick.basic.DatabaseConfig]] instance for dependency injection.
     *
     * @return A [[slick.basic.DatabaseConfig]] instance.
@@ -69,5 +90,13 @@ class Module(logger: LoggingAdapter, system: ActorSystem) extends AbstractModule
     */
   @Provides @Singleton @Named(DATABASE_DISPATCHER)
   def databaseExecutionContext: ExecutionContext = this.system.dispatchers.lookup(DATABASE_DISPATCHER)
+
+  /**
+    * Bind a [[scala.concurrent.ExecutionContext]] instance for external services integration for dependency injection.
+    *
+    * @return A [[scala.concurrent.ExecutionContext]] instance for external services integration.
+    */
+  @Provides @Singleton @Named(EXTERNAL_DISPATCHER)
+  def externalExecutionContext: ExecutionContext = this.system.dispatchers.lookup(EXTERNAL_DISPATCHER)
 
 }
