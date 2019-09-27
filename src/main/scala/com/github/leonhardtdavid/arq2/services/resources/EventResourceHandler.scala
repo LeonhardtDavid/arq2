@@ -84,6 +84,36 @@ class EventResourceHandler @Inject()(
   }
 
   /**
+    * Save a [[com.github.leonhardtdavid.arq2.models.Event]]
+    *
+    * @param data The Event to save or update.
+    * @return a [[scala.concurrent.Future]] with the result.
+    */
+  def update(data: Event): Future[Event] = db.run {
+    logger.info("Updating Event")
+
+    val dbEvent = this.model2db(data)
+
+    val query =
+      for {
+        eventId <- this.repository.save(dbEvent)
+        _       <- this.requirementsRepository.deleteForEvent(eventId)
+        requirementIds <- DBIOAction.sequence {
+          val rs = data.requirements.map(r => entities.Requirement(r.id, eventId, r.description, r.quantity))
+          rs.map(this.requirementsRepository.save)
+        }
+      } yield {
+        val requirements = requirementIds.zip(data.requirements).map {
+          case (id, requirement) => requirement.copy(id = Some(id))
+        }
+
+        data.copy(id = Some(eventId), requirements = requirements)
+      }
+
+    query.transactionally
+  }
+
+  /**
     * List [[com.github.leonhardtdavid.arq2.models.Event]]
     *
     * @param from     From row.

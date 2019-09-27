@@ -28,31 +28,37 @@ class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(i
   override val routes: Route =
     pathPrefix("users") {
       pathEnd {
-        authenticated { _ =>
-          (post & entity(as[User])) { req =>
-            extractRequestContext { context =>
-              complete {
-                this.handler.save(req.copy(id = None)) map { user =>
-                  this.created(s"${context.request.uri.toRelative.toString()}/${user.id.get.underlying}")
-                }
-              }
-            }
-          }
-        }
+        save
       } ~
         path("tokens") {
-          (post & entity(as[UserToken])) { user =>
-            complete {
-              this.handler.validatePassword(user) map { valid =>
-                if (valid) {
-                  this.ok(Json.obj("token" -> this.jwt.encode(user.username).asJson))
-                } else {
-                  this.notFound("Not a valid user")
-                }
-              }
+          createToken
+        }
+    }
+
+  private def save =
+    authenticated { _ =>
+      (post & entity(as[User])) { req =>
+        extractRequestContext { context =>
+          complete {
+            this.handler.save(req.copy(id = None)) map { user =>
+              this.created(s"${context.request.uri.toRelative.toString()}/${user.id.get.underlying}")
             }
           }
         }
+      }
+    }
+
+  private def createToken =
+    (post & entity(as[UserToken])) { user =>
+      complete {
+        this.handler.validatePassword(user) map { valid =>
+          if (valid) {
+            this.ok(Json.obj("token" -> this.jwt.encode(user.username).asJson))
+          } else {
+            this.notFound("Not a valid user")
+          }
+        }
+      }
     }
 
 }
