@@ -26,12 +26,17 @@ class WSClient @Inject()(
     @Named(EXTERNAL_DISPATCHER) executor: ExecutionContext)
     extends CirceImplicits {
 
-  private def getResponse(uri: String, method: HttpMethod, headers: List[HttpHeader], optionalJson: Option[Json]) = {
+  private def getResponse(
+      url: String,
+      method: HttpMethod,
+      headers: List[HttpHeader] = Nil,
+      optionalJson: Option[Json] = None
+    ) = {
     val data = optionalJson
       .map(json => HttpEntity(ContentTypes.`application/json`, json.toString()))
       .getOrElse(HttpEntity.Empty)
 
-    Http().singleRequest(HttpRequest(method, uri, headers, data))
+    Http().singleRequest(HttpRequest(method, url, headers, data))
   }
 
   /**
@@ -42,7 +47,7 @@ class WSClient @Inject()(
     */
   def get(url: String): Future[Json] =
     this
-      .getResponse(url, HttpMethods.GET, Nil, None)
+      .getResponse(url, HttpMethods.GET)
       .filter(_.status.isSuccess())
       .flatMap { response =>
         Unmarshal(response.entity).to[Json]

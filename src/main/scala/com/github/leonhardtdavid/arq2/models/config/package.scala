@@ -14,7 +14,7 @@ package object config {
   val CACHE_SIZE = "arq2.cache.size"
   val CACHE_TTL  = "arq2.cache.ttl"
 
-  val WEATHER_URL = "arq2.weather.url"
+  val WEATHER_URL = "arq2.weather-api.url"
 
   val DATABASE = "arq2.database"
 

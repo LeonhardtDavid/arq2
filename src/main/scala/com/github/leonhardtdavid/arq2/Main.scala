@@ -24,7 +24,7 @@ object Main extends App {
 
   private val logger = Logging(system.eventStream, "application")
 
-  private val injector = Guice.createInjector(new Module(logger, system))
+  private val injector = Guice.createInjector(new Module(logger, system, materializer))
 
   private val config = injector.getInstance(classOf[InterfaceConfiguration])
 

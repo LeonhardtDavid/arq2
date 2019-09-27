@@ -2,6 +2,7 @@ package com.github.leonhardtdavid.arq2.global
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
+import akka.stream.Materializer
 import com.github.leonhardtdavid.arq2.models.config._
 import com.google.inject.{AbstractModule, Provides}
 import com.typesafe.config.ConfigFactory
@@ -15,14 +16,19 @@ import scala.concurrent.duration._
 /**
   * Main Guice module
   *
-  * @param logger A [[akka.event.LoggingAdapter]] instance.
-  * @param system A [[akka.actor.ActorSystem]] instance.
+  * @param logger       A [[akka.event.LoggingAdapter]] instance.
+  * @param system       A [[akka.actor.ActorSystem]] instance.
+  * @param materializer A [[akka.stream.Materializer]] instance.
   */
-class Module(logger: LoggingAdapter, system: ActorSystem) extends AbstractModule {
+class Module(logger: LoggingAdapter, system: ActorSystem, materializer: Materializer) extends AbstractModule {
 
   private val config = ConfigFactory.load()
 
-  override def configure(): Unit = bind(classOf[LoggingAdapter]).toInstance(this.logger)
+  override def configure(): Unit = {
+    bind(classOf[LoggingAdapter]).toInstance(this.logger)
+    bind(classOf[ActorSystem]).toInstance(this.system)
+    bind(classOf[Materializer]).toInstance(this.materializer)
+  }
 
   /**
     * Bind a [[com.github.leonhardtdavid.arq2.models.config.InterfaceConfiguration]] instance for dependency injection.

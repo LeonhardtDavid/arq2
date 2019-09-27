@@ -10,15 +10,35 @@ import io.circe.syntax._
 /**
   * Router trait for common interface.
   */
-trait Router {
-
-  private val errorKey = "error"
+trait Router extends ResultsHelper {
 
   /**
     * Defines the handled routes.
     * @return A [[akka.http.scaladsl.server.Route Route]]
     */
   def routes: Route
+
+}
+
+/**
+  * Companion object for [[com.github.leonhardtdavid.arq2.routes.Router]]
+  */
+object Router {
+
+  /**
+    * Message to return on unhandled errors.
+    * @param message The message to return.
+    */
+  case class RouteError(message: String)
+
+}
+
+/**
+  * Results helpers.
+  */
+trait ResultsHelper {
+
+  private val errorKey = "error"
 
   /**
     * Creates a [[akka.http.scaladsl.model.HttpResponse]] with status 200.
@@ -88,18 +108,5 @@ trait Router {
         data = ByteString(Json.obj(errorKey -> message.asJson).noSpaces)
       )
     )
-
-}
-
-/**
-  * Companion object for [[com.github.leonhardtdavid.arq2.routes.Router]]
-  */
-object Router {
-
-  /**
-    * Message to return on unhandled errors.
-    * @param message The message to return.
-    */
-  case class RouteError(message: String)
 
 }

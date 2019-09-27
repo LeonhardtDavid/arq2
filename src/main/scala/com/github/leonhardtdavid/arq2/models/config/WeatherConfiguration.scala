@@ -19,5 +19,6 @@ class WeatherConfiguration(url: String) {
     this.url
       .replace("{0}", s"$city, $country")
       .replace("{1}", days.toString)
+      .replaceAll(" ", "+")
 
 }

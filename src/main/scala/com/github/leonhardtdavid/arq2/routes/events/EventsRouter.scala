@@ -5,6 +5,7 @@ import akka.http.scaladsl.server.Route
 import com.github.leonhardtdavid.arq2.entities.EventId
 import com.github.leonhardtdavid.arq2.models.Event
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
+import com.github.leonhardtdavid.arq2.routes.weather.WeatherRouter
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
 import com.github.leonhardtdavid.arq2.services.JWTService
 import com.github.leonhardtdavid.arq2.services.resources.{EventResourceHandler, UserResourceHandler}
@@ -17,15 +18,17 @@ import scala.concurrent.ExecutionContext
 /**
   * Events router.
   *
-  * @param handler     A database handler instance.
-  * @param jwt         JWT token creator and validator.
-  * @param userHandler Users database handler.
-  * @param ec          An implicit [[scala.concurrent.ExecutionContext]] instance.
+  * @param handler       A database handler instance.
+  * @param jwt           JWT token creator and validator.
+  * @param userHandler   Users database handler.
+  * @param weatherRouter An instance of [[com.github.leonhardtdavid.arq2.routes.weather.WeatherRouter]].
+  * @param ec            An implicit [[scala.concurrent.ExecutionContext]] instance.
   */
 class EventsRouter @Inject()(
     handler: EventResourceHandler,
     val jwt: JWTService,
-    userHandler: UserResourceHandler
+    userHandler: UserResourceHandler,
+    weatherRouter: WeatherRouter
   )(implicit ec: ExecutionContext)
     extends Router
     with AuthenticationRouter
@@ -38,10 +41,13 @@ class EventsRouter @Inject()(
           list ~
             save(username)
         } ~
-          path(LongNumber) { id =>
-            getEvent(id) ~
-              update(id, username) ~
-              deleteEvent(id, username)
+          pathPrefix(LongNumber) { id =>
+            pathEnd {
+              getEvent(id) ~
+                update(id, username) ~
+                deleteEvent(id, username)
+            } ~
+              this.weatherRouter.routes(EventId(id))
           }
       }
     }
