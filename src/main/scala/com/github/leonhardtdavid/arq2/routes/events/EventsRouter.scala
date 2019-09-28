@@ -4,6 +4,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.github.leonhardtdavid.arq2.entities.EventId
 import com.github.leonhardtdavid.arq2.models.Event
+import com.github.leonhardtdavid.arq2.routes.assistances.AssistanceRouter
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.weather.WeatherRouter
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
@@ -18,17 +19,19 @@ import scala.concurrent.ExecutionContext
 /**
   * Events router.
   *
-  * @param handler       A database handler instance.
-  * @param jwt           JWT token creator and validator.
-  * @param userHandler   Users database handler.
-  * @param weatherRouter An instance of [[com.github.leonhardtdavid.arq2.routes.weather.WeatherRouter]].
-  * @param ec            An implicit [[scala.concurrent.ExecutionContext]] instance.
+  * @param handler          A database handler instance.
+  * @param jwt              JWT token creator and validator.
+  * @param userHandler      Users database handler.
+  * @param weatherRouter    An instance of [[com.github.leonhardtdavid.arq2.routes.weather.WeatherRouter]].
+  * @param assistanceRouter An instance of [[com.github.leonhardtdavid.arq2.routes.assistances.AssistanceRouter]].
+  * @param ec               An implicit [[scala.concurrent.ExecutionContext]] instance.
   */
 class EventsRouter @Inject()(
     handler: EventResourceHandler,
     val jwt: JWTService,
     userHandler: UserResourceHandler,
-    weatherRouter: WeatherRouter
+    weatherRouter: WeatherRouter,
+    assistanceRouter: AssistanceRouter
   )(implicit ec: ExecutionContext)
     extends Router
     with AuthenticationRouter
@@ -47,7 +50,8 @@ class EventsRouter @Inject()(
                 update(id, username) ~
                 deleteEvent(id, username)
             } ~
-              this.weatherRouter.routes(EventId(id))
+              this.weatherRouter.routes(EventId(id)) ~
+              this.assistanceRouter.eventsRoutes(username, EventId(id))
           }
       }
     }
@@ -66,8 +70,8 @@ class EventsRouter @Inject()(
             count <- futureCount
           } yield
             Json.obj(
-              "items"    -> list.asJson,
-              "quantity" -> count.asJson
+              "items" -> list.asJson,
+              "count" -> count.asJson
             )
         }
       }

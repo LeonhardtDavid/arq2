@@ -19,9 +19,9 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * Weather router.
   *
-  * @param weather         A [[com.github.leonhardtdavid.arq2.services.WeatherService]] instance.
-  * @param evenHandler     A [[com.github.leonhardtdavid.arq2.services.resources.EventResourceHandler]] instance.
-  * @param ec              An implicit [[scala.concurrent.ExecutionContext]].
+  * @param weather     A [[com.github.leonhardtdavid.arq2.services.WeatherService]] instance.
+  * @param evenHandler A [[com.github.leonhardtdavid.arq2.services.resources.EventResourceHandler]] instance.
+  * @param ec          An implicit [[scala.concurrent.ExecutionContext]].
   */
 class WeatherRouter @Inject()(weather: WeatherService, evenHandler: EventResourceHandler)(implicit ec: ExecutionContext)
     extends ResultsHelper

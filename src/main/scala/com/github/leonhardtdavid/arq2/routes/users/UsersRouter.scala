@@ -2,7 +2,9 @@ package com.github.leonhardtdavid.arq2.routes.users
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import com.github.leonhardtdavid.arq2.entities.UserId
 import com.github.leonhardtdavid.arq2.models.{User, UserToken}
+import com.github.leonhardtdavid.arq2.routes.assistances.AssistanceRouter
 import com.github.leonhardtdavid.arq2.routes.json.CirceImplicits
 import com.github.leonhardtdavid.arq2.routes.{AuthenticationRouter, Router}
 import com.github.leonhardtdavid.arq2.services.JWTService
@@ -16,11 +18,16 @@ import scala.concurrent.ExecutionContext
 /**
   * Users router.
   *
+  * @param assistanceRouter An instance of [[com.github.leonhardtdavid.arq2.routes.assistances.AssistanceRouter]].
   * @param handler A database handler instance.
   * @param jwt     JWT token creator and validator.
   * @param ec      An implicit [[scala.concurrent.ExecutionContext]] instance.
   */
-class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(implicit ec: ExecutionContext)
+class UsersRouter @Inject()(
+    assistanceRouter: AssistanceRouter,
+    handler: UserResourceHandler,
+    val jwt: JWTService
+  )(implicit ec: ExecutionContext)
     extends Router
     with AuthenticationRouter
     with CirceImplicits {
@@ -32,6 +39,11 @@ class UsersRouter @Inject()(handler: UserResourceHandler, val jwt: JWTService)(i
       } ~
         path("tokens") {
           createToken
+        } ~
+        authenticated { username =>
+          pathPrefix(LongNumber) { id =>
+            this.assistanceRouter.usersRoutes(username, UserId(id))
+          }
         }
     }
 

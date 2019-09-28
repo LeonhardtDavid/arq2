@@ -1,6 +1,6 @@
 package com.github.leonhardtdavid.arq2.routes.json
 
-import com.github.leonhardtdavid.arq2.entities.{EventId, RequirementId, UserId}
+import com.github.leonhardtdavid.arq2.entities.{AssistanceId, EventId, RequirementId, UserId}
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport
 import io.circe.generic.extras.semiauto._
 import io.circe.generic.extras.{AutoDerivation, Configuration}
@@ -22,5 +22,8 @@ trait CirceImplicits extends AutoDerivation with ErrorAccumulatingCirceSupport {
 
   implicit val requirementIdEncoder: Encoder[RequirementId] = deriveUnwrappedEncoder
   implicit val requirementIdDecoder: Decoder[RequirementId] = deriveUnwrappedDecoder
+
+  implicit val assistanceIdEncoder: Encoder[AssistanceId] = deriveUnwrappedEncoder
+  implicit val assistanceIdDecoder: Decoder[AssistanceId] = deriveUnwrappedDecoder
 
 }

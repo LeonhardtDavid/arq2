@@ -3,7 +3,7 @@ package com.github.leonhardtdavid.arq2.services.repositories
 import java.sql.Timestamp
 import java.time.{OffsetDateTime, ZoneOffset}
 
-import com.github.leonhardtdavid.arq2.entities.{Entity, EventId, RequirementId, UserId}
+import com.github.leonhardtdavid.arq2.entities._
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 
@@ -99,6 +99,12 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit ec: ExecutionCo
     MappedColumnType.base[RequirementId, Long](
       _.underlying,
       RequirementId.apply
+    )
+
+  implicit protected def assistanceIdColumn: BaseColumnType[AssistanceId] =
+    MappedColumnType.base[AssistanceId, Long](
+      _.underlying,
+      AssistanceId.apply
     )
   // scalastyle:on scaladoc
 

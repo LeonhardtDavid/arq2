@@ -39,3 +39,15 @@ CREATE TABLE requirement
     FOREIGN KEY (event_id) REFERENCES event (id),
     PRIMARY KEY (id)
 );
+
+CREATE TABLE assistance
+(
+    id                SERIAL,
+    user_id           INTEGER NOT NULL,
+    event_id          INTEGER NOT NULL,
+    bringing_name     VARCHAR(100),
+    bringing_quantity SMALLINT,
+    FOREIGN KEY (user_id) REFERENCES "user" (id),
+    FOREIGN KEY (event_id) REFERENCES event (id),
+    PRIMARY KEY (id)
+);
