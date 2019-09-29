@@ -2,14 +2,14 @@
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%date - [%level] %logger{15} - %message%n%xException{100}</pattern>
+      <pattern>%date - [%level] - %logger{15} - %message%n%xException{100}</pattern>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>TRACE</level>
     </filter>
   </appender>
 
-  <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+  <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
     <queueSize>500</queueSize>
     <discardingThreshold>0</discardingThreshold>
     <appender-ref ref="STDOUT" />
@@ -18,10 +18,10 @@
   <logger name="application" level="DEBUG"/>
 
   <logger name="slick" level="INFO" />
-  <logger name="slick.jdbc" level="INFO" />
+  <logger name="slick.jdbc" level="DEBUG" />
 
   <root level="DEBUG">
-    <appender-ref ref="ASYNCSTDOUT"/>
+    <appender-ref ref="ASYNC_STDOUT"/>
   </root>
 
 </configuration>
