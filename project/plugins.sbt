@@ -20,3 +20,6 @@ addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.0")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 // Autoformat code
 addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % "1.16")
+
+// Monitoring
+addSbtPlugin("io.kamon" % "sbt-kanela-runner" % "2.0.2")

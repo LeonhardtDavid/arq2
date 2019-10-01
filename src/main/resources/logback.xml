@@ -1,27 +1,30 @@
 <configuration>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%date - [%level] - %logger{15} - %message%n%xException{100}</pattern>
-    </encoder>
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>TRACE</level>
-    </filter>
-  </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date - [%level] - %logger{15} - %message%n%xException{100}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
 
-  <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
-    <queueSize>500</queueSize>
-    <discardingThreshold>0</discardingThreshold>
-    <appender-ref ref="STDOUT" />
-  </appender>
+    <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>500</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="STDOUT"/>
+    </appender>
 
-  <logger name="application" level="DEBUG"/>
+    <logger name="application" level="DEBUG"/>
 
-  <logger name="slick" level="INFO" />
-  <logger name="slick.jdbc" level="DEBUG" />
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+    <logger name="oshi.hardware.platform.mac" level="INFO"/>
 
-  <root level="DEBUG">
-    <appender-ref ref="ASYNC_STDOUT"/>
-  </root>
+    <logger name="slick" level="INFO"/>
+    <logger name="slick.jdbc.JdbcBackend" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="ASYNC_STDOUT"/>
+    </root>
 
 </configuration>

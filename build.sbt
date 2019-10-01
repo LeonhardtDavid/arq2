@@ -61,11 +61,14 @@ libraryDependencies ++= {
     "com.typesafe.slick" %% "slick"          % slickVersion,
     "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
     "org.postgresql"     % "postgresql"      % "42.2.6",
-//    "com.h2database"     % "h2"              % "1.4.198",
+    // Monitoring
+    "io.kamon" %% "kamon-bundle"       % "2.0.1",
+    "io.kamon" %% "kamon-apm-reporter" % "2.0.0",
     // Testing
-    "org.mockito"   % "mockito-core"          % "3.0.0"  % "it,test",
-    "org.scalatest" %% "scalatest"            % "3.0.8"  % "it,test",
-    "com.dimafeng"  %% "testcontainers-scala" % "0.29.0" % "it,test"
+    "com.h2database" % "h2"                    % "1.4.198" % Test,
+    "org.mockito"    % "mockito-core"          % "3.0.0"   % "it,test",
+    "org.scalatest"  %% "scalatest"            % "3.0.8"   % "it,test",
+    "com.dimafeng"   %% "testcontainers-scala" % "0.29.0"  % "it,test"
   )
 }
 

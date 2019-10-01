@@ -9,6 +9,7 @@ import com.github.leonhardtdavid.arq2.global.Module
 import com.github.leonhardtdavid.arq2.models.config.InterfaceConfiguration
 import com.github.leonhardtdavid.arq2.routes.RouterService
 import com.google.inject.Guice
+import kamon.Kamon
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
@@ -17,6 +18,8 @@ import scala.util.{Failure, Success}
   * Main entry for application.
   */
 object Main extends App {
+
+  Kamon.init()
 
   implicit private val system: ActorSystem        = ActorSystem()
   implicit private val executor: ExecutionContext = system.dispatcher
