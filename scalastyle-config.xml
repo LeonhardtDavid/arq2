@@ -121,7 +121,7 @@
     <check level="warning" class="org.scalastyle.scalariform.ReturnChecker" enabled="true"/>
     <check level="error" class="org.scalastyle.scalariform.ScalaDocChecker" enabled="true" >
         <parameters>
-            <parameter name="ignoreRegex">(.*Spec$)|(.*SpecIT$)</parameter>
+            <parameter name="ignoreRegex">(.*Spec$)|(.*SpecIT$)|(.*Simulation$)</parameter>
             <parameter name="ignoreTokenTypes">PatDefOrDcl</parameter>
             <parameter name="ignoreOverride">true</parameter>
             <parameter name="indentStyle">anydoc</parameter>

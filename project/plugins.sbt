@@ -23,3 +23,6 @@ addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % "1.16")
 
 // Monitoring
 addSbtPlugin("io.kamon" % "sbt-kanela-runner" % "2.0.2")
+
+// Testing
+addSbtPlugin("io.gatling" % "gatling-sbt" % "3.1.0")

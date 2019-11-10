@@ -38,3 +38,43 @@ La API permite crear y autenticar un usuario, crear, modificar, eliminar y parti
 | POST   | /api/events/:id/assistances | Asistir a un evento.                            | Si                     |
 
 Para las rutas que requieren autenticación, es necesario enviar el token generado con `/api/users/tokens` en el header `Authorization` con el contenido: `Bearer {{token}}`.
+
+# Escenarios
+
+## Creación de un evento
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para la creación de un evento
+
+## Modificación de un evento
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para la creación de un evento
+1. Realizar request para obtener el evento creado
+1. Realizar request para la modificación del evento
+
+## Listar los eventos disponibles
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para obtener el listado de los eventos
+
+# Obtener el clima para un evento
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para la creación de un evento con fecha no mayor a 16 días de la actual
+1. Realizar request para obtener el clima del evento
+
+## Eliminar un evento
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para la creación de un evento
+1. Realizar request para obtener el evento creado
+1. Realizar request para eliminar el evento
+1. Realizar request para obtener el evento y verificar que no exista
+
+## Asistir a un evento
+
+1. Realizar request para obtener el token para la autenticación
+1. Realizar request para la creación de un evento
+1. Realizar request para asistir al evento
+1. Realizar request para obtener el listado de los asistentes al evento
