@@ -40,7 +40,7 @@ class RequirementRepository @Inject()(
     * @param eventId The event's id to remove.
     * @return true if delete was successful, otherwise false.
     */
-  def deleteForEvent(eventId: EventId): DBIO[Boolean] = this.table.filter(_.event === eventId).delete.map(_ != 0)
+  def deleteForEvent(eventId: EventId): DBIO[Boolean] = this.table.filter(_.event === eventId).delete.map(_ => true)
 
   // scalastyle:off
   class Requirements(tag: Tag) extends EntityTable(tag, "requirement") {

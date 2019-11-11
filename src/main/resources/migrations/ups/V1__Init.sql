@@ -10,7 +10,11 @@ CREATE TABLE "user"
 );
 
 INSERT INTO "user"(username, password, first_name, last_name, email)
-VALUES ('admin', '$2a$10$GgQPfzS73Pav.T.46OJUvuAatw/GjaiKCns/29b7Jh9ri9zb82BaO', 'Admin', 'Super', 'admin@test.com');
+VALUES
+    -- admin:admin
+    ('admin', '$2a$10$GgQPfzS73Pav.T.46OJUvuAatw/GjaiKCns/29b7Jh9ri9zb82BaO', 'Admin', 'Super', 'admin@test.com'),
+    -- david:test
+    ('david', '$2a$10$kjT5UHoFlt4tBfo.12LW2umImz3HCgeOpyMRoqxt0jNGYHLJ4WRZm', 'David', 'Test', 'test@test.com');
 
 CREATE TABLE event
 (

@@ -58,7 +58,7 @@ Para las rutas que requieren autenticación, es necesario enviar el token genera
 1. Realizar request para obtener el token para la autenticación
 1. Realizar request para obtener el listado de los eventos
 
-# Obtener el clima para un evento
+## Obtener el clima para un evento
 
 1. Realizar request para obtener el token para la autenticación
 1. Realizar request para la creación de un evento con fecha no mayor a 16 días de la actual

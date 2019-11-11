@@ -67,7 +67,7 @@ abstract class Repository[ID, EntityType <: Entity[ID]](implicit ec: ExecutionCo
     * @param id the entity's id to remove
     * @return true if delete was successful, otherwise false
     */
-  def delete(id: ID): DBIO[Boolean] = this.table.filter(_.id === id).delete.map(_ != 0)
+  def delete(id: ID): DBIO[Boolean] = this.table.filter(_.id === id).delete.map(_ => true)
 
   /**
     * Count row quantity.
