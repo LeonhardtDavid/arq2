@@ -19,6 +19,7 @@ class EventsSimulation extends Simulation {
 
   val eventCreation: ScenarioBuilder = scenario("Create event scenario").exec(
     TokenExecutions.token,
+    EventExecutions.listEvents,
     EventExecutions.createEvent
   )
 

@@ -44,6 +44,7 @@ Para las rutas que requieren autenticación, es necesario enviar el token genera
 ## Creación de un evento
 
 1. Realizar request para obtener el token para la autenticación
+1. Realizar request para obtener el listado de los eventos
 1. Realizar request para la creación de un evento
 
 ## Modificación de un evento
