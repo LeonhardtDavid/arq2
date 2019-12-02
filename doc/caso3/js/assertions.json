@@ -1,0 +1,10 @@
+{
+  "simulation": "EventsSimulation",
+  "simulationId": "eventssimulation",
+  "start": 1575257863041,
+  "description": "",
+  "scenarios": ["Create event scenario", "Update event scenario", "List events scenario", "Delete event scenario"],
+  "assertions": [
+
+  ]
+}

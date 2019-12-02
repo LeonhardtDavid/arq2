@@ -46,23 +46,23 @@ class EventsSimulation extends Simulation {
   setUp(
     eventCreation.inject(
       atOnceUsers(1),
-      rampUsersPerSec(1) to 10 during (20 seconds),
-      constantUsersPerSec(10) during (20 seconds)
+      rampUsersPerSec(1) to 5 during (60 seconds),
+      constantUsersPerSec(5) during (10 minutes)
     ),
     eventUpdate.inject(
       atOnceUsers(1),
-      rampUsersPerSec(1) to 10 during (20 seconds),
-      constantUsersPerSec(10) during (20 seconds)
+      rampUsersPerSec(1) to 5 during (60 seconds),
+      constantUsersPerSec(5) during (10 minutes)
     ),
     eventsList.inject(
       atOnceUsers(1),
-      rampUsersPerSec(1) to 10 during (20 seconds),
-      constantUsersPerSec(10) during (20 seconds)
+      rampUsersPerSec(1) to 5 during (60 seconds),
+      constantUsersPerSec(5) during (10 minutes)
     ),
     eventDelete.inject(
       atOnceUsers(1),
-      rampUsersPerSec(1) to 10 during (20 seconds),
-      constantUsersPerSec(10) during (20 seconds)
+      rampUsersPerSec(1) to 5 during (60 seconds),
+      constantUsersPerSec(5) during (10 minutes)
     )
   ).protocols(httpConf)
 
