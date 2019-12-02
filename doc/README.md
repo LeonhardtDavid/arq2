@@ -41,7 +41,7 @@ Cada escenario corre con la siguiente configuración:
 
 ### Reporte de gatling
 
-https://leonhardtdavid.github.io/arq2/doc/caso1
+[https://leonhardtdavid.github.io/arq2/doc/caso1](https://leonhardtdavid.github.io/arq2/doc/caso1)
 
 ### Kamon APM
 
@@ -63,7 +63,7 @@ Cada escenario corre con la siguiente configuración:
 
 ### Reporte de gatling
 
-https://leonhardtdavid.github.io/arq2/doc/caso2
+[https://leonhardtdavid.github.io/arq2/doc/caso2](https://leonhardtdavid.github.io/arq2/doc/caso2)
 
 ### Kamon APM
 
@@ -85,7 +85,7 @@ Cada escenario corre con la siguiente configuración:
 
 ### Reporte de gatling
 
-https://leonhardtdavid.github.io/arq2/doc/caso3
+[https://leonhardtdavid.github.io/arq2/doc/caso3](https://leonhardtdavid.github.io/arq2/doc/caso3)
 
 ### Kamon APM
 
@@ -107,7 +107,7 @@ Cada escenario corre con la siguiente configuración:
 
 ### Reporte de gatling
 
-https://leonhardtdavid.github.io/arq2/doc/caso4
+[https://leonhardtdavid.github.io/arq2/doc/caso4](https://leonhardtdavid.github.io/arq2/doc/caso4)
 
 ### Kamon APM
 
