@@ -7,7 +7,7 @@ organization := "com.github.leonhardtdavid"
 scalaVersion := "2.12.10"
 
 lazy val root = (project in file("."))
-  .enablePlugins(JavaServerAppPackaging, AshScriptPlugin, BuildInfoPlugin, FlywayPlugin, GatlingPlugin)
+  .enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin, BuildInfoPlugin, FlywayPlugin, GatlingPlugin)
   .configs(IntegrationTest, GTest)
   .settings(Defaults.itSettings, inConfig(GTest)(Defaults.testSettings))
 
@@ -31,8 +31,8 @@ mappings in (Compile, packageDoc) := Seq()
 
 libraryDependencies ++= {
   val circeVersion    = "0.11.1"
-  val akkaVersion     = "2.5.25"
-  val akkaHttpVersion = "10.1.10"
+  val akkaVersion     = "2.5.26"
+  val akkaHttpVersion = "10.1.11"
   val slickVersion    = "3.3.1"
   val gatlingVersion  = "3.3.1"
 
@@ -164,3 +164,7 @@ coverageMinimum := 90
 coverageFailOnMinimum := true
 coverageExcludedPackages := "<empty>;router;global;xmls.*;"
 coverageExcludedFiles := ".*BuildInfo.*;.*HealthCheckController.*;.*Routes.*"
+
+dockerBaseImage := "openjdk:8-jre-alpine"
+packageName in Docker := name.value
+mainClass in Compile := Some("com.github.leonhardtdavid.arq2.Main")

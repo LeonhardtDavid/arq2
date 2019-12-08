@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    image: arq2:1.0-SNAPSHOT
+    ports:
+      - "9000:9000"
+    environment:
+      DB_HOST: "jdbc:postgresql://postgres/arq2?stringtype=unspecified"
+      DEFAULT_DISPATCHER_PARALLELISM_FACTOR: 3.0
+      DEFAULT_DISPATCHER_MAX_PARALLELISM: 64
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: arq2
+      POSTGRES_PASSWORD: arq2
+      POSTGRES_DB: arq2
+    ports:
+      - "5432:5432"
