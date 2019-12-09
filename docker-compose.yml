@@ -1,14 +1,24 @@
-version: '3'
+version: '3.7'
 
 services:
-  web:
-    image: arq2:1.0-SNAPSHOT
+  app:
+    build: .
     ports:
       - "9000:9000"
     environment:
+      JAVA_OPTS: "-Xms2048m -Xmx2048m -Duser.timezone=GMT-3"
       DB_HOST: "jdbc:postgresql://postgres/arq2?stringtype=unspecified"
       DEFAULT_DISPATCHER_PARALLELISM_FACTOR: 3.0
       DEFAULT_DISPATCHER_MAX_PARALLELISM: 64
+      KAMON_KEY: $KAMON_KEY
+    volumes:
+      - ivy2:/root/.ivy2
+      - sbt:/root/.sbt
+    deploy:
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 2048M
     depends_on:
       - postgres
 
@@ -18,5 +28,24 @@ services:
       POSTGRES_USER: arq2
       POSTGRES_PASSWORD: arq2
       POSTGRES_DB: arq2
+    volumes:
+      - ./src/main/resources/migrations/ups/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 1024M
+
+volumes:
+  ivy2:
+    driver_opts:
+      o: bind
+      type: none
+      device: $HOME/.ivy2
+  sbt:
+    driver_opts:
+      o: bind
+      type: none
+      device: $HOME/.sbt
