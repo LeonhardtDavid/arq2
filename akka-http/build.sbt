@@ -1,8 +1,9 @@
 // scalastyle:off
 
 import sbt.IntegrationTest
+import com.github.leonhardtdavid.migrations.DatabaseConfig
 
-name := "arq2"
+name := "arq2-akka-http"
 organization := "com.github.leonhardtdavid"
 scalaVersion := "2.12.10"
 
@@ -21,11 +22,13 @@ buildInfoPackage := "com.github.leonhardtdavid.arq2.info"
 buildInfoObject := "BuildInfo"
 buildInfoOptions += BuildInfoOption.ToJson
 
-flywayUrl := "jdbc:postgresql://localhost/arq2?stringtype=unspecified"
-flywayUser := "arq2"
-flywayPassword := "arq2"
-flywayLocations ++= Seq("migrations/ups", "migrations/downs")
-flywayUrl in Test := "jdbc:h2:mem:arq2;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE"
+migrationsConfigs := Seq(
+  new DatabaseConfig(
+    url = "jdbc:postgresql://localhost/arq2?stringtype=unspecified",
+    user = Some("arq2"),
+    password = Some("arq2")
+  )
+)
 
 mappings in (Compile, packageDoc) := Seq()
 
